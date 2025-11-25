@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FashionRack POS - Add Customer</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="accest/css/style.css">
+    </head>
+    <body >
+        <div class="container-fluid">
+            <div class="row">
+
+                <!-- Sidebar -->
+                <div class="col-md-1 sidebar">
+                    <div class="sidebar-header">
+                        <i class="fas fa-store fa-3x text-purple mb-3"></i>
+                        <h3 class="fw-bold">FashionRack POS</h3>
+                    </div>
+                    <div class="sidebar-icon"
+                        onclick="window.location.href='home.html'">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="sidebar-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div class="sidebar-icon">
+                        <i class="fas fa-socks"></i>
+                    </div>
+                    <div class="sidebar-icon">
+                        <i class="fas fa-female"></i>
+                    </div>
+                    <div class="sidebar-icon">
+                        <i class="fas fa-glasses"></i>
+                    </div>
+                    <div class="sidebar-icon"
+                        onclick="window.location.href='product-add.html'">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <div class="sidebar-icon active">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="sidebar-icon" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="col-md-11 p-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card shadow">
+                                <div class="card-body p-4">
+                                    <div class="text-center mb-4">
+                                        <i
+                                            class="fas fa-user-plus fa-3x text-purple mb-3"></i>
+                                        <h4 class="fw-bold">Customer Add
+                                            Form</h4>
+
+                                        <button id="customerViewbtn"  class="btn btn-dark ">customer view</button>
+
+                                    </div>
+                                    <form id="customerForm">
+                                        <div class="mb-3">
+                                            <label
+                                                class="form-label fw-bold">Customer
+                                                Name:</label>
+                                            <input type="text"
+                                                class="form-control"
+                                                id="customerName" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label
+                                                class="form-label fw-bold">Customer
+                                                Tell no:</label>
+                                            <input type="tel"
+                                                class="form-control"
+                                                id="customerTel" required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label
+                                                class="form-label fw-bold">Customer
+                                                Address:</label>
+                                            <textarea class="form-control"
+                                                id="customerAddress" rows="3"
+                                                required></textarea>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <button type="submit"
+                                                class="btn btn-purple flex-fill">Add</button>
+                                            <button type="button"
+                                                class="btn btn-outline-secondary flex-fill"
+                                                onclick="document.getElementById('customerForm').reset()">Clear</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="accest/js/customer.js"></script>
+    </body>
+</html>

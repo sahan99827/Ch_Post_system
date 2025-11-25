@@ -1,0 +1,351 @@
+
+:root {
+    --purple: #8b5cf6;
+    --purple-dark: #7c3aed;
+    --purple-light: #a78bfa;
+    --gray-bg: #f8f9fa;
+    --border-color: #e5e7eb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--gray-bg);
+}
+
+.login-page {
+    background: linear-gradient(135deg, var(--purple-light) 0%, var(--purple) 100%);
+}
+
+.login-card {
+    border: none;
+    border-radius: 15px;
+}
+
+.text-purple {
+    color: var(--purple);
+}
+
+.btn-purple {
+    background-color: var(--purple);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-purple:hover {
+    background-color: var(--purple-dark);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #2c3e50;
+    min-height: 100vh;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.sidebar-icon {
+    width: 50px;
+    height: 50px;
+    background-color: #34495e;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.sidebar-icon:hover,
+.sidebar-icon.active {
+    background-color: var(--purple);
+    transform: scale(1.1);
+}
+
+.sidebar-icon i {
+    font-size: 20px;
+}
+
+/* Main Content */
+.main-content {
+    background-color: white;
+    padding: 20px;
+    border-right: 1px solid var(--border-color);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    border-radius: 10px;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+}
+
+.category-tabs {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.category-tab {
+    padding: 8px 20px;
+    border: 2px solid var(--border-color);
+    background-color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.category-tab:hover,
+.category-tab.active {
+    background-color: var(--purple);
+    color: white;
+    border-color: var(--purple);
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.product-card {
+    background-color: white;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--purple);
+}
+
+.product-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.product-card h6 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.product-card .price {
+    color: var(--purple);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+.order-summary {
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 15px;
+}
+
+.badge.bg-purple {
+    background-color: var(--purple) !important;
+}
+
+.order-items {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.order-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+}
+
+.order-item:hover {
+    background-color: var(--gray-bg);
+}
+
+.order-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 12px;
+}
+
+.order-item-details {
+    flex: 1;
+}
+
+.order-item-details h6 {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.order-item-details p {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 0;
+}
+
+.order-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.qty-btn {
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--purple);
+    background-color: white;
+    color: var(--purple);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.qty-btn:hover {
+    background-color: var(--purple);
+    color: white;
+}
+
+.remove-btn {
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s;
+}
+
+.remove-btn:hover {
+    transform: scale(1.2);
+}
+
+.order-footer {
+    border-top: 2px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.order-total {
+    background-color: var(--gray-bg);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.order-total .d-flex {
+    font-size: 14px;
+}
+
+.order-total .fw-bold {
+    font-size: 18px;
+    color: var(--purple);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--gray-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--purple-light);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--purple);
+}
+
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .sidebar {
+        flex-direction: row;
+        min-height: auto;
+        overflow-x: auto;
+    }
+}
+
+/* Sidebar Header Fix */
+.sidebar-header {
+    text-align: center;
+    padding: 20px 10px;
+    color: #fff;
+    width: 100%;
+
+}
+
+.sidebar-header h3 {
+    font-size: 14px;     
+    line-height: 1.2;
+    margin-top: 10px;
+    font-weight: 700;
+}
+.sidebar-header h3 { font-size: 18px; }
+.sidebar-header h3 { font-size: 14px; }
