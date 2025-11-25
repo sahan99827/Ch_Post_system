@@ -3,15 +3,17 @@ const currentUser = localStorage.getItem('currentUser');
 if (!currentUser) {
     window.location.href = 'index.html';
 }
-
 // Product Form
-document.getElementById('productForm').addEventListener('submit', function(e) {
+const productForm = document.getElementById("productForm");
+if (productForm) {
+productForm.addEventListener('submit', function(e) {
     e.preventDefault();
     
     const productName = document.getElementById('productName').value;
     const productType = document.getElementById('productType').value;
     const productPrice = document.getElementById('productPrice').value;
     const productImage = document.getElementById('productImage').files[0];
+    const productStock = document.getElementById('productStock').value;
     
     // Get existing products or create new array
     let products = JSON.parse(localStorage.getItem('products')) || [];
@@ -25,6 +27,7 @@ document.getElementById('productForm').addEventListener('submit', function(e) {
                 name: productName,
                 type: productType,
                 price: parseFloat(productPrice),
+                stock: parseFloat(productStock),
                 image: e.target.result,
                 createdAt: new Date().toISOString()
             };
@@ -49,6 +52,7 @@ document.getElementById('productForm').addEventListener('submit', function(e) {
             name: productName,
             type: productType,
             price: parseFloat(productPrice),
+            stock: parseFloat(productStock),
             image: defaultImages[productType] || 'https://via.placeholder.com/150',
             createdAt: new Date().toISOString()
         };
@@ -59,6 +63,59 @@ document.getElementById('productForm').addEventListener('submit', function(e) {
         showSuccessAndRedirect();
     }
 });
+}
+document.addEventListener("DOMContentLoaded", function () {
+  const tableBody = document.getElementById("productInfo");
+  if (tableBody) {
+    const products = JSON.parse(localStorage.getItem("products")) || [];
+    tableBody.innerHTML = "";
+    products.forEach((products) => {
+      tableBody.innerHTML += `
+                <tr>
+                    <td>${products.name}</td>
+                    <td>${products.type}</td>
+                    <td>${products.price}</td>
+                    <td>${products.stock}</td>
+                    <td><button   class="btn btn-dark ">Edit</button></td>
+                </tr>
+            `;
+    });
+  }
+
+  // Buttons
+  const customerAddBtn = document.getElementById("customerAddbtn");
+  if (customerAddBtn) {
+    customerAddBtn.addEventListener("click", () => {
+      window.location.href = "customer-add.html";
+    });
+  }
+
+  const customerViewBtn = document.getElementById("customerViewbtn");
+  if (customerViewBtn) {
+    customerViewBtn.addEventListener("click", () => {
+      window.location.href = "customer-view.html";
+    });
+  }
+});
+
+
+
+
+ // Buttons
+  const productAddbtn = document.getElementById("productAddbtn");
+  if (productAddbtn) {
+    productAddbtn.addEventListener("click", () => {
+      window.location.href = "product-add.html";
+    });
+  }
+
+  const productViewbtn = document.getElementById("productViewbtn");
+  if (productViewbtn) {
+    productViewbtn.addEventListener("click", () => {
+      window.location.href = "product-view.html";
+    });
+  }
+
 
 function showSuccessAndRedirect() {
     Swal.fire({
