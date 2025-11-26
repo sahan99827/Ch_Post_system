@@ -334,93 +334,6 @@ if (clearCartBtn) {
   });
 }
 
-function completePOSPayment(cart, currentUser) {
-    if (cart.length === 0) {
-        Swal.fire({
-            icon: "warning",
-            title: "Cart is Empty",
-            text: "Please add items to cart first",
-            confirmButtonColor: "#667eea",
-        });
-        return;
-    }
-
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const tax = subtotal * 0.08;
-    const total = subtotal + tax;
-
-    Swal.fire({
-        title: "Complete Payment",
-        html: `
-            <div class="text-start">
-                <p><strong>Subtotal:</strong> ${subtotal.toFixed(2)} LKR</p>
-                <p><strong>Tax (8%):</strong> ${tax.toFixed(2)} LKR</p>
-                <p><strong>Total Amount:</strong> ${total.toFixed(2)} LKR</p>
-                <p><strong>Items:</strong> ${cart.reduce((sum, item) => sum + item.quantity, 0)}</p>
-            </div>
-        `,
-        icon: "info",
-        showCancelButton: true,
-        confirmButtonColor: "#667eea",
-        cancelButtonColor: "#6b7280",
-        confirmButtonText: '<i class="fas fa-check me-2"></i>Complete Payment',
-        cancelButtonText: "Cancel",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            try {
-                // Update stock
-                let storedProducts = JSON.parse(localStorage.getItem("products")) || [];
-
-                cart.forEach((cartItem) => {
-                    const product = storedProducts.find((p) => p.id === cartItem.id);
-                    if (product) {
-                        product.stock -= cartItem.quantity;
-                        if (product.stock < 0) product.stock = 0;
-                    }
-                });
-
-                localStorage.setItem("products", JSON.stringify(storedProducts));
-
-                // Save order
-                const orders = JSON.parse(localStorage.getItem("orders")) || [];
-                const newOrder = {
-                    id: Date.now(),
-                    items: JSON.parse(JSON.stringify(cart)),
-                    subtotal: subtotal,
-                    tax: tax,
-                    total: total,
-                    date: new Date().toISOString(),
-                    cashier: currentUser.fullname || currentUser.username,
-                };
-
-                orders.push(newOrder);
-                localStorage.setItem("orders", JSON.stringify(orders));
-
-                // Clear cart
-                localStorage.setItem("currentCart", JSON.stringify([]));
-
-                // Show invoice
-                showBillModal(newOrder);
-
-                Swal.fire({
-                    icon: "success",
-                    title: "Payment Successful",
-                    text: "Order completed and invoice generated!",
-                    confirmButtonColor: "#667eea",
-                });
-
-            } catch (error) {
-                console.error("Payment error:", error);
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: "Something went wrong while processing payment.",
-                });
-            }
-        }
-    });
-}
-
 
 // Proceed to payment - SINGLE EVENT LISTENER
 const proceedPaymentBtn = document.getElementById("proceedPayment");
@@ -499,19 +412,21 @@ if (proceedPaymentBtn) {
 
           // Save order
           const orders = JSON.parse(localStorage.getItem("orders")) || [];
+          const customerNumber =JSON.parse(localStorage.getItem("customerNumber"));
           const newOrder = {
             id: Date.now(),
-            items: JSON.parse(JSON.stringify(cart)), // Deep copy
+            items: JSON.parse(JSON.stringify(cart)), 
             subtotal: subtotal,
             tax: tax,
             total: total,
             date: new Date().toISOString(),
             cashier: currentUser.fullname || currentUser.username,
+            customerNumber:customerNumber,
           };
           
           orders.push(newOrder);
           localStorage.setItem("orders", JSON.stringify(orders));
-
+          localStorage.removeItem(customerNumber);
           // Store invoice data for printing
           localStorage.setItem("currentInvoice", JSON.stringify(newOrder));
 
@@ -603,3 +518,37 @@ if (logoutBtn) {
     });
   });
 }
+
+
+const customernumberBtn = document.getElementById("customernumberBtn");
+const myModal = new bootstrap.Modal(document.getElementById("customerModal"));
+const customerModal = document.getElementById("customerModal");
+
+// OPEN MODAL when button clicked
+customernumberBtn.addEventListener("click", () => {
+    myModal.show();
+});
+
+// Form submit
+const customerNumberForm = document.getElementById("customerNumberForm");
+
+if (customerNumberForm) {
+    customerNumberForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const customerNumber = document.getElementById("customerNumber").value;
+        localStorage.setItem("customerNumber", JSON.stringify(customerNumber));
+
+        document.activeElement.blur();
+        myModal.hide();
+    });
+}
+
+
+customerModal.addEventListener("hidden.bs.modal", () => {
+    customerModal.setAttribute("inert", "");
+});
+
+customerModal.addEventListener("show.bs.modal", () => {
+    customerModal.removeAttribute("inert");
+});

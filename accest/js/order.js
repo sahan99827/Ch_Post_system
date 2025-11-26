@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
       tableBody.innerHTML += `
                 <tr>
                     <td>${userName}</td>
-                    <td>${orders.customerTel}</td>
+                    <td>${orders.customerNumber}</td>
                     <td>${Math.round(orders.total)}</td>
                      <td>${new Date(orders.date).toLocaleDateString("en-CA")}</td>
                     <td><button   class="btn btn-dark " onclick="viewItem(${
