@@ -82,24 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Buttons
-  const customerAddBtn = document.getElementById("customerAddbtn");
-  if (customerAddBtn) {
-    customerAddBtn.addEventListener("click", () => {
-      window.location.href = "customer-add.html";
-    });
-  }
-
-  const customerViewBtn = document.getElementById("customerViewbtn");
-  if (customerViewBtn) {
-    customerViewBtn.addEventListener("click", () => {
-      window.location.href = "customer-view.html";
-    });
-  }
 });
-
-
-
 
  // Buttons
   const productAddbtn = document.getElementById("productAddbtn");
@@ -113,6 +96,13 @@ document.addEventListener("DOMContentLoaded", function () {
   if (productViewbtn) {
     productViewbtn.addEventListener("click", () => {
       window.location.href = "product-view.html";
+    });
+  }
+
+  const orderViewbtn = document.getElementById("orderViewbtn");
+  if (orderViewbtn) {
+    orderViewbtn.addEventListener("click", () => {
+      window.location.href = "order.html";
     });
   }
 

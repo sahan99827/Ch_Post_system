@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionRack POS - Invoice</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="accest/css/bill-style.css">
+</head>
+<body>
+    <div class="invoice-container">
+        <!-- Header -->
+        <div class="invoice-header">
+            <div class="company-info">
+                <div class="company-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div>
+                        <h1 class="company-name">FashionRack POS</h1>
+                    </div>
+                </div>
+                <div class="company-details">
+                    <div>123 Fashion Street, Colombo 00700, Sri Lanka</div>
+                    <div>Phone: +94 11 234 5678 | Email: info@fashionrack.lk</div>
+                </div>
+                <div class="invoice-type">
+                    <h3>Invoice / Bill</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Invoice Details -->
+        <div class="invoice-details">
+            <div class="customer-info">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-row">
+                            <span class="info-label">Invoice No:</span>
+                            <span class="info-value" id="invoiceNo">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Customer:</span>
+                            <span class="info-value" id="customerName">Walk-in Customer</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Cashier:</span>
+                            <span class="info-value" id="cashierName">-</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="info-row">
+                            <span class="info-label">Date:</span>
+                            <span class="info-value" id="invoiceDate">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Time:</span>
+                            <span class="info-value" id="invoiceTime">-</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Payment Method:</span>
+                            <span class="info-value" id="paymentMethod">Cash</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Items Table -->
+            <div class="table-container">
+                <table class="invoice-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">No</th>
+                            <th>Description</th>
+                            <th style="width: 100px;">Quantity</th>
+                            <th style="width: 120px;">Rate (LKR)</th>
+                            <th style="width: 120px;">Total (LKR)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsTable">
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 30px;">
+                                <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: #667eea;"></i>
+                                <p style="margin-top: 10px;">Loading invoice data...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Totals -->
+            <div class="totals-section">
+                <table class="totals-table">
+                    <tr>
+                        <td>Subtotal:</td>
+                        <td id="subTotal">0.00 LKR</td>
+                    </tr>
+                    <tr>
+                        <td>Tax (8%):</td>
+                        <td id="taxAmount">0.00 LKR</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total Amount:</strong></td>
+                        <td><strong id="totalAmount">0.00 LKR</strong></td>
+                    </tr>
+                </table>
+            </div>
+            
+            <!-- Amount in Words -->
+            <div class="amount-in-words">
+                <strong>Amount in Words:</strong> <span id="amountInWords">Zero Rupees Only</span>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer-section">
+            <div>
+                <strong>Customer Signature</strong><br>
+                <div style="margin-top: 30px; border-top: 1px solid #dee2e6; padding-top: 5px;">
+                    __________________
+                </div>
+            </div>
+            <div>
+                <strong>Authorized By</strong><br>
+                <div style="margin-top: 30px; border-top: 1px solid #dee2e6; padding-top: 5px;">
+                    __________________
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn-print" onclick="printInvoice()">
+                <i class="fas fa-print me-2"></i>Print Invoice
+            </button>
+            <button class="btn-back" onclick="backToPOS()">
+                <i class="fas fa-arrow-left me-2"></i>Back to POS
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="accest/js/bill.js"></script>
+</body>
+</html>

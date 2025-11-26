@@ -349,3 +349,9 @@ body {
 }
 .sidebar-header h3 { font-size: 18px; }
 .sidebar-header h3 { font-size: 14px; }
+
+
+.scrollable-menu {
+    max-height: 500px;
+    overflow-y: auto;
+}
