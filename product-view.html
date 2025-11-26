@@ -85,7 +85,83 @@
                 </div>
             </div>
         </div>
-
+           <!-- Order Item Modal -->
+            <div class="modal fade" id="orderItemModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Order Items</h5>
+                            <button type="button" class="btn-close"
+                                data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                                 <form id="updateproductForm">
+                                        <div class="mb-3">
+                                            <label
+                                                class="form-label fw-bold">Product
+                                                Name:</label>
+                                            <input type="text"
+                                                class="form-control"
+                                                id="productName" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label
+                                                class="form-label fw-bold">Product
+                                                Type:</label>
+                                            <select class="form-select"
+                                                id="productType" required>
+                                                <option value>Select
+                                                    Type</option>
+                                                <option
+                                                    value="tops">Tops</option>
+                                                <option
+                                                    value="bottoms">Bottoms</option>
+                                                <option
+                                                    value="dresses">Dresses</option>
+                                                <option
+                                                    value="accessories">Accessories</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label
+                                                class="form-label fw-bold">Product
+                                                Price:</label>
+                                            <input type="number"
+                                                class="form-control"
+                                                id="productPrice" step="0.01"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label
+                                                class="form-label fw-bold">Product
+                                                Stock:</label>
+                                            <input type="number"
+                                                class="form-control"
+                                                id="productStock" step="0.01"
+                                                required>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label
+                                                class="form-label fw-bold">Product
+                                                Image:</label>
+                                                <img id="imagePreview" class="img-fluid rounded" style="max-height:150px; display:none;">
+                                            <input type="file"
+                                                class="form-control"
+                                                id="productImage"
+                                                accept="image/*">
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <button type="submit"
+                                                class="btn btn-purple flex-fill"> Update </button>
+                                            <button type="button"
+                                                class="btn btn-outline-secondary flex-fill"
+                                                onclick="window.location.href='home.html'">Clear</button>
+                                        </div>
+                                    </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

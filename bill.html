@@ -7,6 +7,33 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="accest/css/bill-style.css">
+    <style>
+        @media print {   
+            body * {
+                visibility: hidden !important;
+            }
+
+
+            .invoice-container, .invoice-container * {
+                visibility: visible !important;
+            }
+
+            .invoice-container {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                background: white !important;
+            }
+
+            .action-buttons {
+                display: none !important;
+            }
+
+        }
+    </style>
 </head>
 <body>
     <div class="invoice-container">

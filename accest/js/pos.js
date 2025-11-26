@@ -132,7 +132,7 @@ function displayProducts(category = "all", searchTerm = "") {
         <span class="badge bg-dark stock-badge">Stock: ${product.stock}</span>  
         <img src="${product.image}" alt="${product.name}">
         <h6>${product.name}</h6>
-        <p class="price">${product.price.toFixed(2)} LKR</p>
+        <p class="price">${Number(product.price).toFixed(2)} LKR</p>
       </div>
     `;
     productsGrid.innerHTML += productCard;
@@ -424,7 +424,9 @@ function completePOSPayment(cart, currentUser) {
 
 // Proceed to payment - SINGLE EVENT LISTENER
 const proceedPaymentBtn = document.getElementById("proceedPayment");
+
 if (proceedPaymentBtn) {
+
   proceedPaymentBtn.addEventListener("click", function () {
     if (cart.length === 0) {
       Swal.fire({
@@ -435,6 +437,7 @@ if (proceedPaymentBtn) {
       });
       return;
     }
+
 
     // Check stock availability before proceeding
     let stockError = false;
