@@ -520,7 +520,6 @@ if (logoutBtn) {
   });
 }
 
-
 const customernumberBtn = document.getElementById("customernumberBtn");
 const myModal = new bootstrap.Modal(document.getElementById("customerModal"));
 const customerModal = document.getElementById("customerModal");
@@ -537,11 +536,48 @@ if (customerNumberForm) {
     customerNumberForm.addEventListener("submit", function (e) {
         e.preventDefault();
 
+        const customers = JSON.parse(localStorage.getItem("customers")) || [];
         const customerNumber = document.getElementById("customerNumber").value;
-        localStorage.setItem("customerNumber", JSON.stringify(customerNumber));
+        const customer = customers.find((c) => c.tel === customerNumber);
 
-        document.activeElement.blur();
-        myModal.hide();
+        // If customer not found
+        if (!customer) {
+            Swal.fire({
+                icon: "error",
+                title: "Customer Number",
+                text: "Customer Number not found",
+                confirmButtonColor: "#ef0000ff",
+            }).then(() => {
+
+                Swal.fire({
+                    title: "Add Customer?",
+                    text: "Do you want to add this customer?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#8b5cf6",
+                    cancelButtonColor: "#6b7280",
+                    confirmButtonText: "Yes, Add",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "customer-add.html";
+                    }
+                });
+            });
+
+            return; 
+        }
+
+       localStorage.setItem("customerNumber", JSON.stringify(customerNumber));
+
+        Swal.fire({
+            icon: "success",
+            title: "Customer Number",
+            text: "Customer Number set successfully",
+            confirmButtonColor: "#8b5cf6",
+        }).then(() => {
+            document.activeElement.blur();
+            myModal.hide();
+        });
     });
 }
 
