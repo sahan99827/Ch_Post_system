@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${customer.name}</td>
                     <td>${customer.address}</td>
                     <td>${customer.tel}</td>
-                    <td><button   class="btn btn-dark ">Edit</button></td>
+                    <td><button   class="btn btn-dark " onClick="edit(${customer.id})">Edit</button></td>
                 </tr>
             `;
     });
@@ -91,3 +91,50 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
     }
   });
 });
+
+
+
+function edit(id) {
+    const customerName = document.getElementById("customerName");
+    const customerTel = document.getElementById("customerTel");
+    const customerAddress = document.getElementById("customerAddress");
+
+  const customers = JSON.parse(localStorage.getItem("customers")) || [];
+  const customer = customers.find((c) => c.id === id);
+
+  if (!customer) {
+    alert("customer not found!");
+    return;
+  }
+
+  customerName.value = customer.name;
+  customerTel.value = customer.tel;
+  customerAddress.value = customer.address;
+
+  localStorage.setItem("editCustomerId", id);
+
+  var myModal = new bootstrap.Modal(document.getElementById("updateCustmerModal"));
+  myModal.show();
+}
+
+
+const updatecustomerForm = document.getElementById("updatecustomerForm");
+if (updatecustomerForm) {
+document.getElementById("updatecustomerForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    const editId = Number(localStorage.getItem("editCustomerId"));
+    const index = customers.findIndex(c => c.id === editId);
+
+    if (index !== -1) {
+        customers[index].name = customerName.value;
+        customers[index].tel = customerTel.value;
+        customers[index].address = customerAddress.value;
+        
+        localStorage.setItem("customers", JSON.stringify(customers));
+        alert("Customer updated!");
+        location.reload();
+        }
+    });
+  }

@@ -113,7 +113,7 @@ function loadInvoiceData() {
       invoice.cashier || "Unknown";
 
     const customers = JSON.parse(localStorage.getItem("customers"));
-    let customerName = "Unknown";
+    let customerName = "Walk-in Customer";
 
     if (customers && Array.isArray(customers)) {
         const customer = customers.find(c => c.tel === invoice.customerNumber);

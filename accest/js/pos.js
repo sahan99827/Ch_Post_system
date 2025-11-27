@@ -426,7 +426,7 @@ if (proceedPaymentBtn) {
           
           orders.push(newOrder);
           localStorage.setItem("orders", JSON.stringify(orders));
-          localStorage.removeItem(customerNumber);
+    
           // Store invoice data for printing
           localStorage.setItem("currentInvoice", JSON.stringify(newOrder));
 
@@ -444,6 +444,7 @@ if (proceedPaymentBtn) {
             showConfirmButton: false,
           }).then(() => {
             // Redirect to invoice page
+            localStorage.removeItem("customerNumber");
             window.location.href = "bill.html";
           });
           
