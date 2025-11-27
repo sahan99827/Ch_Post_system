@@ -14,7 +14,7 @@ if (productForm) {
     const productPrice = document.getElementById("productPrice").value;
     const productImage = document.getElementById("productImage").files[0];
     const productStock = document.getElementById("productStock").value;
-
+    
     // Get existing products or create new array
     let products = JSON.parse(localStorage.getItem("products")) || [];
 
@@ -29,6 +29,7 @@ if (productForm) {
           price: parseFloat(productPrice),
           stock: parseFloat(productStock),
           image: e.target.result,
+          isActive: true,
           createdAt: new Date().toISOString(),
         };
 
@@ -54,6 +55,7 @@ if (productForm) {
         price: parseFloat(productPrice),
         stock: parseFloat(productStock),
         image: defaultImages[productType] || "https://via.placeholder.com/150",
+        isActive: true,
         createdAt: new Date().toISOString(),
       };
 
@@ -70,18 +72,42 @@ document.addEventListener("DOMContentLoaded", function () {
     const products = JSON.parse(localStorage.getItem("products")) || [];
     tableBody.innerHTML = "";
     products.forEach((products) => {
+
       tableBody.innerHTML += `
                 <tr>
                     <td>${products.name}</td>
                     <td>${products.type}</td>
                     <td>${products.price}</td>
                     <td>${products.stock}</td>
-                    <td><button   class="btn btn-dark" onclick="edit(${products.id})">Edit</button></td>
+                    <td><button   class="btn btn-dark" onclick="edit(${products.id})">Edit</button>
+                        <button   class="btn btn-dark" onclick="deleteproduct(${products.id})">Delete</button>
+                    </td>
                 </tr>
             `;
+      
     });
   }
+  
 });
+
+
+function deleteproduct(id) {
+    const products = JSON.parse(localStorage.getItem("products")) || [];
+    const product = products.find((p) => p.id === id);
+    product.isActive = false;
+    localStorage.setItem("products", JSON.stringify(products));
+     Swal.fire({
+    icon: "success",
+    title: "Product Deleted!",
+    text: "Product has been Deleted successfully",
+    confirmButtonColor: "#8b5cf6",
+    timer: 1500,
+  }).then(()=>{
+    location.reload();
+  })
+
+}
+
 
 function edit(id) {
   const productName = document.getElementById("productName");
@@ -94,30 +120,46 @@ function edit(id) {
   const product = products.find((p) => p.id === id);
 
   if (!product) {
-    alert("Product not found!");
+     Swal.fire({
+      title: "Product not found!",
+      text: "The Product not found.",
+      icon: "info",
+      confirmButtonText: "OK",
+    });
     return;
   }
 
-  // Fill fields
   productName.value = product.name;
   productType.value = product.type;
   productPrice.value = product.price;
   productStock.value = product.stock;
 
-  // Show saved image
+if(product.isActive==true){
+   document.getElementById("productActive").style.display = "none";
+}else{
+   document.getElementById("productActive").style.display = "block";
+   document.getElementById("productTrue").checked = product.isActive === true;
+  document.getElementById("productflse").checked = product.isActive === false;
+}
+ 
+
+
   if (product.image) {
-    document.getElementById("imagePreview").src = product.image;
-    document.getElementById("imagePreview").style.display = "block";
+    imagePreview.src = product.image;
+    imagePreview.style.display = "block";
   } else {
     imagePreview.style.display = "none";
   }
 
-  // Save ID for update
+  // Save id to localStorage
   localStorage.setItem("editProductId", id);
 
+  // Open modal
   var myModal = new bootstrap.Modal(document.getElementById("orderItemModal"));
   myModal.show();
 }
+
+
 
 // Buttons
 const productAddbtn = document.getElementById("productAddbtn");
@@ -173,37 +215,65 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
 });
 
 const updateproductForm = document.getElementById("updateproductForm");
+
 if (updateproductForm) {
-document.getElementById("updateproductForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+    updateproductForm.addEventListener("submit", function(e) {
+        e.preventDefault();
 
-    const products = JSON.parse(localStorage.getItem("products")) || [];
-    const editId = Number(localStorage.getItem("editProductId"));
-    const index = products.findIndex(p => p.id === editId);
+        // Get input fields again
+        const productName = document.getElementById("productName");
+        const productType = document.getElementById("productType");
+        const productPrice = document.getElementById("productPrice");
+        const productStock = document.getElementById("productStock");
+        const productTrue = document.getElementById("productTrue");
+        const productFalse = document.getElementById("productflse");
+        const fileInput = document.getElementById("productImage");
 
-    const fileInput = document.getElementById("productImage");
+        let activeValue = productTrue.checked ? true : false;
 
-    if (index !== -1) {
-        products[index].name = productName.value;
-        products[index].type = productType.value;
-        products[index].price = productPrice.value;
-        products[index].stock = productStock.value;
+        const products = JSON.parse(localStorage.getItem("products")) || [];
+        const editId = Number(localStorage.getItem("editProductId"));
+        const index = products.findIndex(p => p.id === editId);
 
-        if (fileInput.files.length > 0) {
-            const reader = new FileReader();
-            reader.onload = function () {
-                products[index].image = reader.result; // base64 stored
+        if (index !== -1) {
+            products[index].name = productName.value;
+            products[index].type = productType.value;
+            products[index].price = Number(productPrice.value);
+            products[index].stock = Number(productStock.value);
+            products[index].isActive = activeValue;
+
+            // If new image selected
+            if (fileInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    products[index].image = reader.result;
+                    localStorage.setItem("products", JSON.stringify(products));
+                    Swal.fire({
+                          title: "product Update!",
+                          text: "The product was successfully updated.",
+                          icon: "success",
+                          confirmButtonText: "OK",
+                        }).then(() => {
+                          updateproductForm.reset();
+                          location.reload();
+
+                        });
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                // No new image → keep old one
                 localStorage.setItem("products", JSON.stringify(products));
-                alert("Product updated!");
-                location.reload();
-            };
-            reader.readAsDataURL(fileInput.files[0]);
-        } else {
-          
-            localStorage.setItem("products", JSON.stringify(products));
-            alert("Product updated!");
-            location.reload();
+                 Swal.fire({
+                          title: "product Update!",
+                          text: "The product was successfully updated.",
+                          icon: "success",
+                          confirmButtonText: "OK",
+                        }).then(() => {
+                          updateproductForm.reset();
+                          location.reload();
+
+                        });
+            }
         }
-    }
-});
+    });
 }

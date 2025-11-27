@@ -9,7 +9,8 @@
             rel="stylesheet">
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
         <link rel="stylesheet" href="accest/css/style.css">
     </head>
     <body>
@@ -30,7 +31,8 @@
                         <i class="fas fa-tshirt"></i>
                     </div>
                     <div class="sidebar-icon">
-                        <img src="accest/img/icon.png" width="30px" height="20px">
+                        <img src="accest/img/icon.png" width="30px"
+                            height="20px">
                     </div>
                     <div class="sidebar-icon">
                         <i class="fas fa-female"></i>
@@ -60,11 +62,17 @@
                                         <i
                                             class="fas fa-box-open fa-3x text-purple mb-3"></i>
                                         <h4 class="fw-bold">Product View</h4>
-                                            <button id="productAddbtn" class="btn btn-dark">Product Add</button>
-                                            <button id="orderViewbtn" class="btn btn-dark">Order View</button>
+                                        <button id="productAddbtn"
+                                            class="btn btn-dark">Product
+                                            Add</button>
+                                        <button id="orderViewbtn"
+                                            class="btn btn-dark">Order
+                                            View</button>
                                     </div>
-                                    <div id="productList" class="table-responsive scrollable-menu">
-                                        <table class="table table-striped table-sm">
+                                    <div id="productList"
+                                        class="table-responsive scrollable-menu">
+                                        <table
+                                            class="table table-striped table-sm">
                                             <thead>
                                                 <tr>
                                                     <th>Product Name</th>
@@ -78,14 +86,14 @@
                                                 <!-- Product rows will be dynamically added here -->
                                             </tbody>
                                         </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-           <!-- Order Item Modal -->
+            <!-- Order Item Modal -->
             <div class="modal fade" id="orderItemModal" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -95,76 +103,100 @@
                                 data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
-                                 <form id="updateproductForm">
-                                        <div class="mb-3">
-                                            <label
-                                                class="form-label fw-bold">Product
-                                                Name:</label>
-                                            <input type="text"
-                                                class="form-control"
-                                                id="productName" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label
-                                                class="form-label fw-bold">Product
-                                                Type:</label>
-                                            <select class="form-select"
-                                                id="productType" required>
-                                                <option value>Select
-                                                    Type</option>
-                                                <option
-                                                    value="tops">Tops</option>
-                                                <option
-                                                    value="bottoms">Bottoms</option>
-                                                <option
-                                                    value="dresses">Dresses</option>
-                                                <option
-                                                    value="accessories">Accessories</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label
-                                                class="form-label fw-bold">Product
-                                                Price:</label>
-                                            <input type="number"
-                                                class="form-control"
-                                                id="productPrice" step="0.01"
-                                                required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label
-                                                class="form-label fw-bold">Product
-                                                Stock:</label>
-                                            <input type="number"
-                                                class="form-control"
-                                                id="productStock" step="0.01"
-                                                required>
-                                        </div>
-                                        <div class="mb-4">
-                                            <label
-                                                class="form-label fw-bold">Product
-                                                Image:</label>
-                                                <img id="imagePreview" class="img-fluid rounded" style="max-height:150px; display:none;">
-                                            <input type="file"
-                                                class="form-control"
-                                                id="productImage"
-                                                accept="image/*">
-                                        </div>
-                                        <div class="d-flex gap-2">
-                                            <button type="submit"
-                                                class="btn btn-purple flex-fill"> Update </button>
-                                            <button type="button"
-                                                class="btn btn-outline-secondary flex-fill"
-                                                onclick="document.getElementById('updateproductForm').reset()">Clear</button>
-                                        </div>
-                                    </form>
+                            <form id="updateproductForm">
+                                <div class="mb-3">
+                                    <label
+                                        class="form-label fw-bold">Product
+                                        Name:</label>
+                                    <input type="text"
+                                        class="form-control"
+                                        id="productName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label
+                                        class="form-label fw-bold">Product
+                                        Type:</label>
+                                    <select class="form-select"
+                                        id="productType" required>
+                                        <option value>Select
+                                            Type</option>
+                                        <option
+                                            value="tops">Tops</option>
+                                        <option
+                                            value="bottoms">Bottoms</option>
+                                        <option
+                                            value="dresses">Dresses</option>
+                                        <option
+                                            value="accessories">Accessories</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label
+                                        class="form-label fw-bold">Product
+                                        Price:</label>
+                                    <input type="number"
+                                        class="form-control"
+                                        id="productPrice" step="0.01"
+                                        required>
+                                </div>
+                                <div class="mb-3" id="productActive">
+                                    <label
+                                        class="form-label fw-bold">Product
+                                        active:</label>
+                                    <div class="form-check">
+                                        <input type="radio" name="productActive"
+                                            class="form-check-input"
+                                            id="productTrue" value="true">
+                                        <label
+                                            class="form-check-label">True</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input type="radio" name="productActive"
+                                            class="form-check-input"
+                                            id="productflse" value="false">
+                                        <label
+                                            class="form-check-label">False</label>
+                                    </div>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label
+                                        class="form-label fw-bold">Product
+                                        Stock:</label>
+                                    <input type="number"
+                                        class="form-control"
+                                        id="productStock" step="0.01"
+                                        required>
+                                </div>
+                                <div class="mb-4">
+                                    <label
+                                        class="form-label fw-bold">Product
+                                        Image:</label>
+                                    <img id="imagePreview"
+                                        class="img-fluid rounded"
+                                        style="max-height:150px; display:none;">
+                                    <input type="file"
+                                        class="form-control"
+                                        id="productImage"
+                                        accept="image/*">
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button type="submit"
+                                        class="btn btn-purple flex-fill"> Update
+                                    </button>
+                                    <button type="button"
+                                        class="btn btn-outline-secondary flex-fill"
+                                        onclick="document.getElementById('updateproductForm').reset()">Clear</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="accest/js/product.js"></script>
-    </body>
-</html>
+            <script
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script src="accest/js/product.js"></script>
+        </body>
+    </html>

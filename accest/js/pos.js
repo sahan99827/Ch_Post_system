@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "tops",
         price: 1500,
         image: "accest/img/cl1.png",
+        isActive: true,
         stock: 50,
       },
       {
@@ -35,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "tops",
         price: 2500,
         image: "accest/img/cl2.png",
+        isActive: true,
         stock: 25,
       },
       {
@@ -43,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "bottoms",
         price: 3500,
         image: "accest/img/cl3.png",
+        isActive: true,
         stock: 10,
       },
       {
@@ -51,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "bottoms",
         price: 2000,
         image: "accest/img/cl4.png",
+        isActive: true,
         stock: 50,
       },
       {
@@ -59,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "dresses",
         price: 4500,
         image: "accest/img/cl5.png",
+        isActive: true,
         stock: 23,
       },
       {
@@ -67,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "accessories",
         price: 1200,
         image: "accest/img/cl6.png",
+        isActive: true,
         stock: 50,
       },
       {
@@ -75,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "accessories",
         price: 800,
         image: "accest/img/cl7.png",
+        isActive: true,
         stock: 13,
       },
       {
@@ -83,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "accessories",
         price: 1000,
         image: "accest/img/cl8.png",
+        isActive: true,
         stock: 50,
       },
     ];
@@ -127,6 +135,7 @@ function displayProducts(category = "all", searchTerm = "") {
   }
 
   filteredProducts.forEach((product) => {
+    if(product.isActive ===true){
     const productCard = `
       <div class="product-card" onclick="addToCart(${product.id})">
         <span class="badge bg-dark stock-badge">Stock: ${product.stock}</span>  
@@ -136,6 +145,7 @@ function displayProducts(category = "all", searchTerm = "") {
       </div>
     `;
     productsGrid.innerHTML += productCard;
+    }
   });
 }
 

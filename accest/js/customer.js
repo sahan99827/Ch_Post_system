@@ -20,6 +20,7 @@ if (customerForm) {
       name: customerName,
       tel: customerTel,
       address: customerAddress,
+      isActive:true,
       createdAt: new Date().toISOString(),
     };
 
@@ -51,12 +52,30 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${customer.name}</td>
                     <td>${customer.address}</td>
                     <td>${customer.tel}</td>
-                    <td><button   class="btn btn-dark " onClick="edit(${customer.id})">Edit</button></td>
+                    <td><button   class="btn btn-dark " onClick="edit(${customer.id})">Edit</button>
+                    <button   class="btn btn-dark " onClick="deleteCustomer(${customer.id})">Delete</button>
+                    </td>
                 </tr>
             `;
     });
   }
+});
+function deleteCustomer(id) {
+    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    const product = customers.find((c) => c.id === id);
+    product.isActive = false;
+    localStorage.setItem("customers", JSON.stringify(customers));
+     Swal.fire({
+    icon: "success",
+    title: "Customer Deleted!",
+    text: "Customer has been Deleted successfully",
+    confirmButtonColor: "#8b5cf6",
+    timer: 1500,
+  }).then(()=>{
+    location.reload();
+  })
 
+}
   // Buttons
   const customerAddBtn = document.getElementById("customerAddbtn");
   if (customerAddBtn) {
@@ -71,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = "customer-view.html";
     });
   }
-});
+
 
 // Logout
 document.getElementById("logoutBtn").addEventListener("click", function () {
@@ -111,6 +130,16 @@ function edit(id) {
   customerTel.value = customer.tel;
   customerAddress.value = customer.address;
 
+  if(customer.isActive==true){
+    document.getElementById("customerActive").style.display = "none";
+  }else{
+    document.getElementById("customerActive").style.display = "block";
+    document.getElementById("customerTrue").checked = customer.isActive === true;
+    document.getElementById("customerflse").checked = customer.isActive === false;
+  }
+  
+
+
   localStorage.setItem("editCustomerId", id);
 
   var myModal = new bootstrap.Modal(document.getElementById("updateCustmerModal"));
@@ -123,6 +152,11 @@ if (updatecustomerForm) {
 document.getElementById("updatecustomerForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
+    const customerTrue = document.getElementById("customerTrue");
+    const customerFalse = document.getElementById("customerflse");
+
+
+    let activeValue = customerTrue.checked ? true : false;
     const customers = JSON.parse(localStorage.getItem("customers")) || [];
     const editId = Number(localStorage.getItem("editCustomerId"));
     const index = customers.findIndex(c => c.id === editId);
@@ -131,10 +165,21 @@ document.getElementById("updatecustomerForm").addEventListener("submit", functio
         customers[index].name = customerName.value;
         customers[index].tel = customerTel.value;
         customers[index].address = customerAddress.value;
+        customers[index].isActive = activeValue;
         
         localStorage.setItem("customers", JSON.stringify(customers));
-        alert("Customer updated!");
-        location.reload();
+       
+                Swal.fire({
+                          title: "Customer Update!",
+                          text: "The Customers was successfully updated.",
+                          icon: "success",
+                          confirmButtonText: "OK",
+                        }).then(() => {
+                          updatecustomerForm.reset();
+                          location.reload();
+
+                        });
+
         }
     });
   }
