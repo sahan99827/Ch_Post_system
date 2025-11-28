@@ -64,11 +64,9 @@
                                 items</span>
                         </button>
                     </div>
-
-                    <div class="search-bar">
-                        <input type="text" class="form-control"
-                            id="searchProduct" placeholder="Search products...">
-                        <div class="category-tabs" id="categoryTabs">
+                    <div class="search-bar"> <input type="text" class="form-control" id="searchProduct" placeholder="Search products..."></div>
+                    <div class="category-tabs" id="categoryTabs">
+                        <div class="tab-buttons d-flex gap-2">
                             <button class="category-tab active"
                                 data-category="all">All</button>
                             <button class="category-tab"
@@ -80,11 +78,18 @@
                             <button class="category-tab"
                                 data-category="accessories">Accessories</button>
                         </div>
+
+                        <div class="sidebar-icon mb-3"
+                            onclick="window.location.href='product-add.html'">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
                     </div>
 
                     <div class="products-grid" id="productsGrid">
                         <!-- Products will be loaded here -->
                     </div>
+                    <div id="paginationControls"
+                        class="d-flex justify-content-center mt-3 gap-2"></div>
                 </div>
 
                 <!-- Order Summary -->
@@ -130,7 +135,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="modal fade" id="customerModal" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">

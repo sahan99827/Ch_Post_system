@@ -12,6 +12,10 @@ if (!currentUser) {
 // Initialize cart
 let cart = JSON.parse(localStorage.getItem("currentCart")) || [];
 
+let currentPage = 1;
+const itemsPerPage = 18;
+
+
 // Load products
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
@@ -106,6 +110,111 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 let currentCategory = "all";
+
+
+function renderProducts(filteredProducts) {
+
+    const productsGrid = document.getElementById("productsGrid");
+
+    if (!filteredProducts) {
+        productsGrid.innerHTML = "<p class='text-muted'>No products</p>";
+        return;
+    }
+
+    // PAGINATION LOGIC
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    const paginatedProducts = filteredProducts.slice(start, end);
+
+    productsGrid.innerHTML = "";
+
+    if (paginatedProducts.length === 0) {
+        productsGrid.innerHTML = "<p class='text-muted'>No products found</p>";
+    } else {
+        paginatedProducts.forEach(p => {
+            if(p.isActive ===true){
+            const card = document.createElement("div");
+            card.classList.add("product-card");
+            card.innerHTML = `
+             <span class="badge bg-dark stock-badge">Stock: ${p.stock}</span> 
+                <img src="${p.image}" />
+                <h6>${p.name}</h6>
+                <div class="price">${p.price.toFixed(2)} LKR</div>
+            `;
+            productsGrid.appendChild(card);
+            }
+        });
+    }
+
+    // SHOW PAGINATION
+    renderPagination(filteredProducts.length);
+}
+
+
+
+function renderPagination(totalItems) {
+    const pagination = document.getElementById("paginationControls");
+    pagination.innerHTML = "";
+
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    if (totalPages <= 1) return; // No need for pagination
+
+    // PREVIOUS
+    const prev = document.createElement("button");
+    prev.className = "btn btn-sm btn-outline-dark";
+    prev.textContent = "Previous";
+    prev.disabled = currentPage === 1;
+    prev.onclick = () => {
+        currentPage--;
+        filterProducts(false);
+    };
+    pagination.appendChild(prev);
+
+    // PAGE NUMBERS
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.className = `btn btn-sm ${currentPage === i ? "btn-purple" : "btn-outline-dark"}`;
+        btn.textContent = i;
+
+        btn.onclick = () => {
+            currentPage = i;
+            filterProducts(false);
+        };
+
+        pagination.appendChild(btn);
+    }
+
+    // NEXT
+    const next = document.createElement("button");
+    next.className = "btn btn-sm btn-outline-dark";
+    next.textContent = "Next";
+    next.disabled = currentPage === totalPages;
+    next.onclick = () => {
+        currentPage++;
+        filterProducts(false);
+    };
+    pagination.appendChild(next);
+}
+
+function filterProducts(resetPage = true) {
+    const search = document.getElementById("searchProduct").value.toLowerCase();
+    const activeCategory = document.querySelector(".category-tab.active").dataset.category;
+
+    let filtered = products.filter(p => {
+        const matchCategory = (activeCategory === "all" || p.type === activeCategory);
+        const matchSearch = p.name.toLowerCase().includes(search);
+        return matchCategory && matchSearch;
+    });
+
+    if (resetPage) currentPage = 1;
+
+    renderProducts(filtered);
+}
+
+ document.addEventListener("DOMContentLoaded", filterProducts);
+
 
 // Display products
 function displayProducts(category = "all", searchTerm = "") {
