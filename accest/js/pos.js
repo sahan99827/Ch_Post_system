@@ -551,7 +551,7 @@ if (customerNumberForm) {
         const customer = customers.find((c) => c.tel === customerNumber);
 
         // If customer not found
-        if (!customer) {
+        if (!customer || customer.isActive === false) {
             Swal.fire({
                 icon: "error",
                 title: "Customer Number",
