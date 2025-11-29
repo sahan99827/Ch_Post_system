@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize display
   loadStoredStock();
-  displayProducts(currentCategory, "");
+  filterProducts();
   updateCart();
 });
 
@@ -135,6 +135,9 @@ function renderProducts(filteredProducts) {
         paginatedProducts.forEach(p => {
             if(p.isActive ===true){
             const card = document.createElement("div");
+            card.onclick= () =>{
+              addToCart(p.id);
+            }
             card.classList.add("product-card");
             card.innerHTML = `
              <span class="badge bg-dark stock-badge">Stock: ${p.stock}</span> 
@@ -147,7 +150,6 @@ function renderProducts(filteredProducts) {
         });
     }
 
-    // SHOW PAGINATION
     renderPagination(filteredProducts.length);
 }
 
@@ -159,9 +161,8 @@ function renderPagination(totalItems) {
 
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-    if (totalPages <= 1) return; // No need for pagination
+    if (totalPages <= 1) return; 
 
-    // PREVIOUS
     const prev = document.createElement("button");
     prev.className = "btn btn-sm btn-outline-dark";
     prev.textContent = "Previous";
@@ -172,7 +173,7 @@ function renderPagination(totalItems) {
     };
     pagination.appendChild(prev);
 
-    // PAGE NUMBERS
+
     for (let i = 1; i <= totalPages; i++) {
         const btn = document.createElement("button");
         btn.className = `btn btn-sm ${currentPage === i ? "btn-purple" : "btn-outline-dark"}`;
@@ -186,7 +187,7 @@ function renderPagination(totalItems) {
         pagination.appendChild(btn);
     }
 
-    // NEXT
+   
     const next = document.createElement("button");
     next.className = "btn btn-sm btn-outline-dark";
     next.textContent = "Next";
@@ -214,49 +215,6 @@ function filterProducts(resetPage = true) {
 }
 
  document.addEventListener("DOMContentLoaded", filterProducts);
-
-
-// Display products
-function displayProducts(category = "all", searchTerm = "") {
-  const productsGrid = document.getElementById("productsGrid");
-  if (!productsGrid) return;
-  
-  productsGrid.innerHTML = "";
-
-  let filteredProducts = products;
-
-  // Filter by category
-  if (category !== "all") {
-    filteredProducts = filteredProducts.filter((p) => p.type === category);
-  }
-
-  // Filter by search
-  if (searchTerm) {
-    filteredProducts = filteredProducts.filter((p) =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }
-
-  if (filteredProducts.length === 0) {
-    productsGrid.innerHTML =
-      '<div class="col-12 text-center text-muted py-5"><i class="fas fa-box-open fa-3x mb-3"></i><p>No products found</p></div>';
-    return;
-  }
-
-  filteredProducts.forEach((product) => {
-    if(product.isActive ===true){
-    const productCard = `
-      <div class="product-card" onclick="addToCart(${product.id})">
-        <span class="badge bg-dark stock-badge">Stock: ${product.stock}</span>  
-        <img src="${product.image}" alt="${product.name}">
-        <h6>${product.name}</h6>
-        <p class="price">${Number(product.price).toFixed(2)} LKR</p>
-      </div>
-    `;
-    productsGrid.innerHTML += productCard;
-    }
-  });
-}
 
 function loadStoredStock() {
   const storedProducts = JSON.parse(localStorage.getItem("products")) || [];
@@ -587,8 +545,10 @@ document.querySelectorAll(".category-tab").forEach((tab) => {
     document.querySelectorAll(".category-tab").forEach((t) => t.classList.remove("active"));
     this.classList.add("active");
     currentCategory = this.dataset.category;
-    const searchInput = document.getElementById("searchProduct");
-    displayProducts(currentCategory, searchInput ? searchInput.value : "");
+    currentPage = 1;
+    // const searchInput = document.getElementById("searchProduct");
+    filterProducts();
+
   });
 });
 
@@ -604,8 +564,9 @@ document.querySelectorAll(".sidebar-icon[data-view]").forEach((icon) => {
     const categoryTab = document.querySelector(`.category-tab[data-category="${view}"]`);
     if (categoryTab) categoryTab.classList.add("active");
 
-    const searchInput = document.getElementById("searchProduct");
-    displayProducts(view, searchInput ? searchInput.value : "");
+    // const searchInput = document.getElementById("searchProduct");
+    filterProducts();
+
   });
 });
 
@@ -613,7 +574,8 @@ document.querySelectorAll(".sidebar-icon[data-view]").forEach((icon) => {
 const searchInput = document.getElementById("searchProduct");
 if (searchInput) {
   searchInput.addEventListener("input", function () {
-    displayProducts(currentCategory, this.value);
+   filterProducts();
+
   });
 }
 
